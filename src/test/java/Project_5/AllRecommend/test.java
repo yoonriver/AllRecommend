@@ -6,7 +6,6 @@ import Project_5.AllRecommend.member.MemberEntity;
 import Project_5.AllRecommend.movie.MovieEntity;
 import Project_5.AllRecommend.repository.DislikeRepository;
 import Project_5.AllRecommend.repository.JpaMemberRepository;
-import Project_5.AllRecommend.repository.MemberRepository;
 import Project_5.AllRecommend.repository.MovieRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +73,7 @@ public class test {
         List<DislikeEntity> dislikeList = dislikeRepository.findDislikeContentsById(member.getId());
 
         // 싫어하는 장르를 제외한 영화 목록 받아오기
-        List<MovieEntity> movieEntityList = movieRepository.movieListWithoutDislikes(dislikeList);
+        List<MovieEntity> movieEntityList = movieRepository.movieListWithoutDislikes();
 
         // 출력
         for (MovieEntity movieEntity : movieEntityList) {

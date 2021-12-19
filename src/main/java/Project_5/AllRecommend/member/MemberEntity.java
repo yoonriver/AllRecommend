@@ -25,11 +25,4 @@ public class MemberEntity {
         this.memberId = id;
     }
 
-//    public List<Dislike> getLikeList() {
-//        return likeList;
-//    }
-//
-//    public void setLikeList(List<Dislike> likeList) {
-//        this.likeList = likeList;
-//    }
 }
