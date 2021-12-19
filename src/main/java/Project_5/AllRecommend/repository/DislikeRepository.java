@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface DislikeRepository extends JpaRepository<DislikeEntity, Long> {
 
-    @Query(nativeQuery = true, value = "SELECT * FROM DISLIKE_ENTITY WHERE MEMBER_ID = ?")
+    @Query(nativeQuery = true, value = "SELECT * FROM DISLIKE WHERE MEMBER_ID = ?")
     List<DislikeEntity> findDislikeContentsById(Long id);
 }

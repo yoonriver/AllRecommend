@@ -5,6 +5,7 @@ import Project_5.AllRecommend.member.MemberEntity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "DISLIKE")
 public class DislikeEntity {
 
     @Id
