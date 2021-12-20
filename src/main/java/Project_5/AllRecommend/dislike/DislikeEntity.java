@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "DISLIKE")
-public class DislikeEntity {
+public class DislikeEntity  {
 
     @Id
     @Column(name = "DISLIKE_ID")
@@ -19,13 +19,13 @@ public class DislikeEntity {
 
     private String dl_Content;
 
-    public Long getDislikeId() {
-        return dislikeId;
-    }
-
-    public void setDislikeId(Long dislikeId) {
-        this.dislikeId = dislikeId;
-    }
+//    public Long getDislikeId() {
+//        return dislikeId;
+//    }
+//
+//    public void setDislikeId(Long dislikeId) {
+//        this.dislikeId = dislikeId;
+//    }
 
     public MemberEntity getMemberEntity() {
         return memberEntity;
