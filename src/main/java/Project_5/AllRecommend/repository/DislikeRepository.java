@@ -10,4 +10,7 @@ public interface DislikeRepository extends JpaRepository<DislikeEntity, Long> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM DISLIKE WHERE MEMBER_ID = ?")
     List<DislikeEntity> findDislikeContentsById(Long id);
+
+    @Query(nativeQuery = true, value = "SELECT dl_content FROM DISLIKE WHERE MEMBER_ID = ?")
+    List<String> dl_ContentFindById(Long id);
 }

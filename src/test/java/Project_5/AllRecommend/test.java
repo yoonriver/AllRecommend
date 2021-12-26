@@ -2,23 +2,25 @@ package Project_5.AllRecommend;
 
 
 import Project_5.AllRecommend.dislike.DislikeEntity;
+import Project_5.AllRecommend.dislike.LikesEntity;
 import Project_5.AllRecommend.member.MemberEntity;
 import Project_5.AllRecommend.movie.MovieEntity;
 import Project_5.AllRecommend.repository.DislikeRepository;
-import Project_5.AllRecommend.repository.JpaMemberRepository;
+import Project_5.AllRecommend.repository.MemberRepository;
+import Project_5.AllRecommend.repository.LikesRepository;
 import Project_5.AllRecommend.repository.MovieRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 public class test {
 
     @Autowired
-    private JpaMemberRepository jpaMemberRepository;
+    private MemberRepository memberRepository;
 
     @Autowired
     private DislikeRepository dislikeRepository;
@@ -26,11 +28,14 @@ public class test {
     @Autowired
     private MovieRepository movieRepository;
 
+    @Autowired
+    private LikesRepository likeRepository;
+
     @Test
     public void dlTest() {
         // 멤버 생성
         MemberEntity member = new MemberEntity();
-        jpaMemberRepository.save(member);
+        memberRepository.save(member);
 
         // 영화 목록 작성
         MovieEntity movieEntity1 = new MovieEntity();
@@ -57,6 +62,12 @@ public class test {
         movieEntity4.setCate2("로맨스");
         movieRepository.save(movieEntity4);
 
+        MovieEntity movieEntity5 = new MovieEntity();
+        movieEntity5.setMovieTitle("가디언즈오브갤럭시");
+        movieEntity5.setCate1("SF");
+        movieEntity5.setCate2("히어로");
+        movieRepository.save(movieEntity5);
+
         // 멤버에 싫어하는 장르 데이터 입력
         DislikeEntity dislike1 = new DislikeEntity();
         dislike1.setMemberEntity(member);
@@ -69,15 +80,37 @@ public class test {
         dislikeRepository.save(dislike1);
         dislikeRepository.save(dislike2);
 
-        // 회원의 싫어하는 장르를 리스트로 저장
-        List<DislikeEntity> dislikeList = dislikeRepository.findDislikeContentsById(member.getId());
 
-        // 싫어하는 장르를 제외한 영화 목록 받아오기
-        List<MovieEntity> movieEntityList = movieRepository.movieListWithoutDislikes();
+
+        // 멤버에 좋아하는 장르 데이터 입력
+        LikesEntity likes1 = new LikesEntity();
+        likes1.setMemberEntity(member);
+        likes1.setLikes_Content("히어로");
+
+        LikesEntity likes2 = new LikesEntity();
+        likes2.setMemberEntity(member);
+        likes2.setLikes_Content("공포");
+
+        likeRepository.save(likes1);
+        likeRepository.save(likes2);
+
+
+        // 회원이 싫어하는와 좋아하는 장르를 List<String>으로 저장
+        List<String> dislikeStr = dislikeRepository.dl_ContentFindById(member.getId());
+        List<MovieEntity> movieDislikesList = movieRepository.movieListWithoutDislikes(dislikeStr);
+
+        // 싫어하는 장르를 제외한 영화 목록에서 좋아하는 장르만 가져오기
+        List<String> likesStr = likeRepository.likesContentById(member.getId());
+        List<MovieEntity> movieLikesList = movieRepository.movieListFindByLikesWithoutDislikes(dislikeStr, likesStr);
+
 
         // 출력
-        for (MovieEntity movieEntity : movieEntityList) {
-            System.out.println("movieEntity.getMovieTitle() = " + movieEntity.getMovieTitle());
+        for (MovieEntity dislikeMovieEntity : movieDislikesList) {
+            System.out.println("dislikeMovieEntity.getMovieTitle() = " + dislikeMovieEntity.getMovieTitle());
+        }
+
+        for (MovieEntity likesMovieEntity : movieLikesList) {
+            System.out.println("likesMovieEntity.getMovieTitle() = " + likesMovieEntity.getMovieTitle());
         }
     }
 

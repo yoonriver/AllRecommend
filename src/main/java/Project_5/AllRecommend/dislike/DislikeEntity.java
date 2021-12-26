@@ -19,19 +19,13 @@ public class DislikeEntity  {
 
     private String dl_Content;
 
-//    public Long getDislikeId() {
-//        return dislikeId;
-//    }
-//
-//    public void setDislikeId(Long dislikeId) {
-//        this.dislikeId = dislikeId;
-//    }
 
     public MemberEntity getMemberEntity() {
         return memberEntity;
     }
 
     public void setMemberEntity(MemberEntity memberEntity) {
+        memberEntity.getDislikes().add(this);
         this.memberEntity = memberEntity;
     }
 
